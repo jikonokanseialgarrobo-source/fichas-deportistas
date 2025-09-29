@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ficha Deportista — Club</title>
+  <style>
+    :root{
+      --bg:#0b1020; --card:#111735; --ink:#e9ecff; --muted:#9aa3c7; --accent:#6aa7ff;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif;background:#0b1020;color:var(--ink)}
+    .wrap{max-width:960px;margin:0 auto;padding:24px}
+    header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .card{background:#111735;border-radius:16px;padding:18px;color:var(--ink)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:720px){.row{grid-template-columns:1fr}}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+    .value{font-size:16px;background:#0d1433;border:1px solid rgba(255,255,255,.08);padding:10px 12px;border-radius:10px}
+    .pill{font-size:12px;padding:2px 8px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:#14204b;color:#cdd5ff}
+    .muted{color:var(--muted)}
+    .qr{width:120px;height:120px;background:#fff;border-radius:12px;display:grid;place-items:center}
+    .hide{filter:blur(6px)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Ficha Deportista</h1>
+  </header>
+
+  <section id="view-ficha" class="card" style="display:none">
+    <div style="display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+      <div class="qr" id="qrBox"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div><label>Nombre</label><div class="value" id="v-nombre"></div></div>
+      <div><label>ID</label><div class="value" id="v-id"></div></div>
+      <div><label>Categoría</label><div class="value" id="v-cat"></div></div>
+      <div><label>Grado</label><div class="value" id="v-grado"></div></div>
+      <div><label>Peso</label><div class="value" id="v-peso"></div></div>
+      <div><label>Club</label><div class="value" id="v-club"></div></div>
+      <div><label>Emergencia</label><div class="value hide" id="v-emerg"></div></div>
+      <div><label>Salud</label><div class="value hide" id="v-salud"></div></div>
+    </div>
+  </section>
+
+  <section id="view-lista" class="card">
+    <p class="muted">Vista de administrador (usar <code>?admin=1</code>)</p>
+    <div id="list"></div>
+  </section>
+</div>
+
+<script>
+// Datos de prueba con id + key
+const DATA = [
+  { id:"BK-001", k:"Q1W2-E3R4-T5", nombre:"Benjamín Quezada", categoria:"Adulto -81 kg", grado:"Negro 1º Dan", peso:"79 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 9123 4567", salud:"Alergia a ibuprofeno" },
+  { id:"BK-002", k:"Y7U8-I9O0-P1", nombre:"Diego Quezada", categoria:"Cadete -60 kg", grado:"Verde", peso:"58 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 9111 2222", salud:"Sin observaciones" }
+];
+
+const $ = s => document.querySelector(s);
+const params = new URLSearchParams(location.search);
+const currentId = params.get("id");
+const currentKey = params.get("key");
+const isAdmin = params.get("admin")==="1";
+
+function makeQR(text){
+  const size=120;
+  return `https://chart.googleapis.com/chart?cht=qr&chs=${size}x${size}&chl=${encodeURIComponent(text)}`;
+}
+
+function renderFicha(d){
+  $("#v-nombre").textContent = d.nombre;
+  $("#v-id").textContent = d.id;
+  $("#v-cat").textContent = d.categoria;
+  $("#v-grado").textContent = d.grado;
+  $("#v-peso").textContent = d.peso;
+  $("#v-club").textContent = d.club;
+  $("#v-emerg").textContent = d.emergencia;
+  $("#v-salud").textContent = d.salud;
+  const url = location.origin+location.pathname+`?id=${encodeURIComponent(d.id)}&key=${encodeURIComponent(d.k)}`;
+  $("#qrBox").innerHTML = `<img src="${makeQR(url)}" width="120" height="120">`;
+}
+
+function renderLista(){
+  const list = $("#list");
+  if(!isAdmin){ list.innerHTML = "<div class='muted'>Acceso restringido</div>"; return; }
+  list.innerHTML = "";
+  DATA.forEach(d=>{
+    const url = location.origin+location.pathname+`?id=${encodeURIComponent(d.id)}&key=${encodeURIComponent(d.k)}`;
+    const row = document.createElement("div");
+    row.innerHTML = `<p><strong>${d.nombre}</strong> — <a href="${url}">Abrir ficha</a> — <img src="${makeQR(url)}" width="60"></p>`;
+    list.appendChild(row);
+  });
+}
+
+// Inicialización
+if(currentId){
+  const d = DATA.find(x=>x.id===currentId && x.k===currentKey);
+  if(d){
+    $("#view-ficha").style.display="block";
+    renderFicha(d);
+  } else {
+    $("#view-lista").style.display="block";
+    $("#list").innerHTML="<p class='muted'>No autorizado o enlace incorrecto.</p>";
+  }
+} else {
+  $("#view-lista").style.display="block";
+  renderLista();
+}
+</script>
+</body>
+</html>
