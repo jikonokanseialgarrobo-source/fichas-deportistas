@@ -90,7 +90,6 @@ const params = new URLSearchParams(location.search);
 const currentId = params.get("id");
 const currentKey = params.get("key");
 const isAdmin = params.get("admin")==="1";
-}
 function renderFicha(d){
   $("#v-foto").src = d.foto;
   $("#v-nombre").textContent = d.nombre;
