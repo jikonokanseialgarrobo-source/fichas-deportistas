@@ -56,6 +56,7 @@
 </div>
     <div class="row" style="margin-top:12px">
       <div><label>Nombre</label><div class="value" id="v-nombre"></div></div>
+      <div><label>Fecha nacimiento</label><div class="value" id="v-fecha"></div></div>
       <div><label>ID</label><div class="value" id="v-id"></div></div>
       <div><label>Categoría</label><div class="value" id="v-cat"></div></div>
       <div><label>Grado</label><div class="value" id="v-grado"></div></div>
@@ -74,9 +75,9 @@
 <script>
 // Datos de prueba con id + key
 const DATA = [
-  { id:"001", k:"8120", nombre:"Benjamín Maximiliano Quezada Hernández", categoria:"sub-21; absoluta", grado:"1º Kyu (cafe)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429 ", salud:"sin observaciones"},
-  { id:"002", k:"4020", nombre:"Diego Alonso Quezada Hernández", categoria:"Sub-11", grado:"2° kyu (amarillo)", peso:"28 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"Diabetes tipo 1" },
-  { id:"003", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", categoria:"Absoluta", grado:"1° dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/BryanQ.jpg" }
+  { id:"001", k:"8120", nombre:"Benjamín Maximiliano Quezada Hernández", categoria:"sub-21; absoluta", grado:"1º Kyu (cafe)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429 ", salud:"sin observaciones", foto: "img/BryanQ.jpg"},
+  { id:"002", k:"4020", nombre:"Diego Alonso Quezada Hernández", categoria:"Sub-11", grado:"2° kyu (amarillo)", peso:"28 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"Diabetes tipo 1", foto: "img/BryanQ.jpg" },
+  { id:"003", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", fecha:"30-01-2002" categoria:"Absoluta", grado:"1° dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/BryanQ.jpg" }
 ];
 
 const $ = s => document.querySelector(s);
@@ -93,6 +94,7 @@ function makeQR(text){
 function renderFicha(d){
   $("#v-foto").src = d.foto;
   $("#v-nombre").textContent = d.nombre;
+  $("#v-fecha").textContent = d.fecha;
   $("#v-id").textContent = d.id;
   $("#v-cat").textContent = d.categoria;
   $("#v-grado").textContent = d.grado;
