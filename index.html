@@ -91,7 +91,10 @@ const currentId = params.get("id");
 const currentKey = params.get("key");
 const isAdmin = params.get("admin")==="1";
   
-
+function makeQR(text){
+  const size=120;
+  return `https://chart.googleapis.com/chart?cht=qr&chs=${size}x${size}&chl=${encodeURIComponent(text)}`;
+}
 
 function renderFicha(d){
   $("#v-foto").src = d.foto;
