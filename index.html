@@ -51,6 +51,10 @@
     <div style="display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap">
       <div class="qr" id="qrBox"></div>
     </div>
+    <div style="text-align:center; margin-bottom:16px;">
+  <img id="v-foto" src="" alt="Foto de perfil" 
+       style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid #fff;">
+</div>
     <div class="row" style="margin-top:12px">
       <div><label>Nombre</label><div class="value" id="v-nombre"></div></div>
       <div><label>ID</label><div class="value" id="v-id"></div></div>
@@ -71,9 +75,9 @@
 <script>
 // Datos de prueba con id + key
 const DATA = [
-  { id:"001", k:"8120", nombre:"Benjamín Maximiliano Quezada Hernández", categoria:"sub-21; absoluta", grado:"1º Kyu (cafe)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429 ", salud:"sin observaciones" },
+  { id:"001", k:"8120", nombre:"Benjamín Maximiliano Quezada Hernández", categoria:"sub-21; absoluta", grado:"1º Kyu (cafe)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429 ", salud:"sin observaciones"},
   { id:"002", k:"4020", nombre:"Diego Alonso Quezada Hernández", categoria:"Sub-11", grado:"2° kyu (amarillo)", peso:"28 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"Diabetes tipo 1" },
-  { id:"003", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", categoria:"Absoluta", grado:"1° dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones" }
+  { id:"003", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", categoria:"Absoluta", grado:"1° dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/BryanQ.jpg" }
 ];
 
 const $ = s => document.querySelector(s);
@@ -88,6 +92,7 @@ function makeQR(text){
 }
 
 function renderFicha(d){
+  $("#v-foto").src = d.foto;
   $("#v-nombre").textContent = d.nombre;
   $("#v-id").textContent = d.id;
   $("#v-cat").textContent = d.categoria;
