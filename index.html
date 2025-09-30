@@ -75,9 +75,14 @@
 <script>
 // Datos de prueba con id + key
 const DATA = [
-  { id:"001", k:"8120", nombre:"Benjamín Maximiliano Quezada Hernández", fecha:"05-06-2008", categoria:"sub-21; absoluta", grado:"1º Kyu (cafe)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429 ", salud:"sin observaciones", foto: "img/Logo.jpg"},
-  { id:"002", k:"4020", nombre:"Diego Alonso Quezada Hernández", fecha:"18-11.2015", categoria:"Sub-11", grado:"2° kyu (amarillo)", peso:"28 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"Diabetes tipo 1", foto: "img/Logo.jpg" },
-  { id:"003", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", fecha:"30-01-2002", categoria:"Absoluta", grado:"1° dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/BryanQ.jpg" }
+  { id:"001", k:"8120", nombre:"Benjamín Maximiliano Quezada Hernández", fecha:"05-06-2008", categoria:"Junior; Senior", grado:"1 Kyu (cafe)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429 ", salud:"sin observaciones", foto: "img/Logo.jpg"},
+  { id:"002", k:"4020", nombre:"Diego Alonso Quezada Hernández", fecha:"18-11-2015", categoria:"Sub-11", grado:"5° Kyu (amarillo)", peso:"28 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"Diabetes tipo 1", foto: "img/Logo.jpg" },
+  { id:"003", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", fecha:"30-01-2002", categoria:"Senior", grado:"1° Dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/BryanQ.jpg" }
+  { id:"004", k:"2141", nombre:"Sebastian Alexander Quezada Hernández", fecha:"29-12-2009", categoria:"Cadete, Junior, Senior", grado:"1° Kyu (cafe)", peso:"66 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"Diabetes tipo 1", foto: "img/Logo.jpg" }
+  { id:"005", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", fecha:"30-01-2002", categoria:"Absoluta", grado:"1° Dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/Logo.jpg" }
+  { id:"006", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", fecha:"30-01-2002", categoria:"Absoluta", grado:"1° Dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/Logo.jpg" }
+  { id:"007", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", fecha:"30-01-2002", categoria:"Absoluta", grado:"1° dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/Logo.jpg" }
+  { id:"008", k:"2141", nombre:"Bryan Ignacio Quezada Hernández", fecha:"30-01-2002", categoria:"Absoluta", grado:"1° dan (negro)", peso:"60 kg", club:"Jiko No Kansei Algarrobo", emergencia:"+56 9 7335 9429", salud:"sin observaciones", foto: "img/Logo.jpg" }
 ];
 
 const $ = s => document.querySelector(s);
@@ -85,12 +90,7 @@ const params = new URLSearchParams(location.search);
 const currentId = params.get("id");
 const currentKey = params.get("key");
 const isAdmin = params.get("admin")==="1";
-
-function makeQR(text){
-  const size=120;
-  return `https://chart.googleapis.com/chart?cht=qr&chs=${size}x${size}&chl=${encodeURIComponent(text)}`;
 }
-
 function renderFicha(d){
   $("#v-foto").src = d.foto;
   $("#v-nombre").textContent = d.nombre;
@@ -103,7 +103,6 @@ function renderFicha(d){
   $("#v-emerg").textContent = d.emergencia;
   $("#v-salud").textContent = d.salud;
   const url = location.origin+location.pathname+`?id=${encodeURIComponent(d.id)}&key=${encodeURIComponent(d.k)}`;
-  $("#qrBox").innerHTML = `<img src="${makeQR(url)}" width="120" height="120">`;
 }
 
 function renderLista(){
